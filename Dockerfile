@@ -1,6 +1,6 @@
 FROM openjdk:11
 ADD ./target/product_management-0.0.1-SNAPSHOT.jar product_management-0.0.1-SNAPSHOT.jar
-EXPOSE 8085
+EXPOSE 8095
 CMD ["java", "-jar", "product_management-0.0.1-SNAPSHOT.jar"]
 #
 #
