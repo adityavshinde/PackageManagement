@@ -1,7 +1,6 @@
 package com.manage.product_management.model;
 
 
-import com.sun.istack.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -16,30 +15,24 @@ public class RecordTable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long item_no;
 
-    @NotNull
-    @Column(name = "Tracking_Id")
-    private String track_id;
+    @Column(name = "Track_Id")
+    private String trackId;
 
-    @NotNull
     @Column(name = "Name")
     private String name;
 
-    @NotNull
-    @Column(name = "Company_Name")
-    private String comp_name;
+    @Column(name = "Comp_Name")
+    private String compName;
 
     @Column(name = "remark")
     private String remark;
 
-    @NotNull
     @Column(name = "Status")
     private String status;
 
-    @NotNull
     @Column(name = "Contact")
     private  String number;
 
-    @NotNull
     @Column(name = "Date")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Temporal(TemporalType.DATE)
@@ -54,27 +47,42 @@ public class RecordTable {
         this.number = number;
     }
 
-    @PrePersist
+    /*@PrePersist
     void onCreate()
     {
         date=new Date();
         status="Unpicked";
     }
-
+*/
     public RecordTable() {
     }
 
-    public RecordTable(Long item_no, String track_id, String name, String comp_name, String remark, String status, String number, Date date) {
+    public RecordTable(Long item_no, String trackId, String name, String compName, String remark, String status, String number, Date date) {
         this.item_no = item_no;
-        this.track_id = track_id;
+        this.trackId = trackId;
         this.name = name;
-        this.comp_name = comp_name;
+        this.compName = compName;
         this.remark = remark;
         this.status = status;
         this.number = number;
         this.date = date;
     }
 
+    public String getTrackId() {
+        return trackId;
+    }
+
+    public void setTrackId(String trackId) {
+        this.trackId = trackId;
+    }
+
+    public String getCompName() {
+        return compName;
+    }
+
+    public void setCompName(String compName) {
+        this.compName = compName;
+    }
 
     public Long getItem_no() {
         return item_no;
@@ -84,13 +92,6 @@ public class RecordTable {
         this.item_no = item_no;
     }
 
-    public String getTrack_id() {
-        return track_id;
-    }
-
-    public void setTrack_id(String track_id) {
-        this.track_id = track_id;
-    }
 
     public String getName() {
         return name;
@@ -100,13 +101,7 @@ public class RecordTable {
         this.name = name;
     }
 
-    public String getComp_name() {
-        return comp_name;
-    }
 
-    public void setComp_name(String comp_name) {
-        this.comp_name = comp_name;
-    }
 
     public String getRemark() {
         return remark;
@@ -134,15 +129,15 @@ public class RecordTable {
 
     @Override
     public String toString() {
-        return "Record{" +
+        return "RecordTable{" +
                 "item_no=" + item_no +
-                ", TrackID='" + track_id + '\'' +
-                ", Name=" + name + '\'' +
-                ", Company_Name=" + comp_name + '\'' +
-                ", remarks=" + remark + '\'' +
-                ", Status=" + status + '\'' +
-                ", Contact='" + number + '\'' +
-                ", Date=" + date +
+                ", trackId='" + trackId + '\'' +
+                ", name='" + name + '\'' +
+                ", compName='" + compName + '\'' +
+                ", remark='" + remark + '\'' +
+                ", status='" + status + '\'' +
+                ", number='" + number + '\'' +
+                ", date=" + date +
                 '}';
     }
 }

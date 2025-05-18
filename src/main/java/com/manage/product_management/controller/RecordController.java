@@ -1,16 +1,15 @@
 package com.manage.product_management.controller;
 
-import com.manage.product_management.model.LoginTable;
 import com.manage.product_management.repository.recordrepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.manage.product_management.model.RecordTable;
 
-import java.awt.*;
 import java.util.List;
 
-@RequestMapping
+@CrossOrigin(origins = "http://localhost:3000")
+@RestController
 public class RecordController {
     @Autowired
     private recordrepository recordrep;
@@ -25,17 +24,17 @@ public class RecordController {
     @GetMapping("/record/{track_id}")
     public ResponseEntity<RecordTable> getRecordData(@PathVariable String track_id) {
 
-        RecordTable record = recordrep.findByTrack_id(track_id);
+        RecordTable record = recordrep.findByTrackId(track_id);
 
-        String cmp = record.getComp_name();
+        String cmp = record.getCompName();
         System.out.println(cmp);
 
         return ResponseEntity.ok().body(record);
     }
-    @PostMapping("/deleterecord")
+    @DeleteMapping("/deleterecord/{track_id}")
     public Boolean deleteRecord(@PathVariable String  track_id)
     {
-        RecordTable record=recordrep.findByTrack_id(track_id);
+        RecordTable record=recordrep.findByTrackId(track_id);
         if(record==null)
         {
             return false;

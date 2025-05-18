@@ -1,6 +1,5 @@
 package com.manage.product_management.model;
 
-import com.sun.istack.NotNull;
 
 import javax.persistence.*;
 //import javax.*;//validation.constraints.NotNull;
@@ -13,23 +12,18 @@ public class LoginTable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    @NotNull
     @Column(name = "Username")
     String username;
 
-    @NotNull
     @Column(name = "FirstName")
     String firstname;
 
-    @NotNull
     @Column(name = "LastName")
     String lastname;
 
-    @NotNull
     @Column(name = "Password")
     String password;
 
-    @NotNull
     @Column(name = "Email")
     String email;
 
@@ -74,7 +68,7 @@ public class LoginTable {
 
     }
 
-    public LoginTable(@NotNull String username, @NotNull String password) {
+    public LoginTable( String username,  String password) {
         this.username = username;
         this.password = password;
     }

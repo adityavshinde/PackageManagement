@@ -31,17 +31,17 @@ public class AdminController {
 
     //admin login
     @PostMapping("/login")
-    public LoginTable loginuser(@RequestBody LoginTable user)
+    public ResponseEntity<LoginTable> loginuser(@RequestBody LoginTable user)
     {
         user = adminrepo.findByUsernameAndPassword(user.getUsername(), user.getPassword());
         if(user == null)
         {
             System.out.println("User does not exist");
 //            return except.("User DoesNot exist");
-             new ResponseEntity<String>("Wrong ID or Password", HttpStatus.NOT_FOUND);
+             //return new ResponseEntity<String>("Wrong ID or Password", HttpStatus.NOT_FOUND);
             //return user;
         }
-        return user;
+        return ResponseEntity.ok().body(user);
     }
     @GetMapping("/login")
     public ResponseEntity<LoginTable> loginuserget(@RequestBody LoginTable user)
