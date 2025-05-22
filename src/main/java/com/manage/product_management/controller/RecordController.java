@@ -1,5 +1,6 @@
 package com.manage.product_management.controller;
 
+import com.manage.product_management.model.LoginTable;
 import com.manage.product_management.repository.recordrepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -26,8 +27,8 @@ public class RecordController {
 //        return ;
 //    }
 
-    @GetMapping("/record/{track_id}")
-    public ResponseEntity<RecordTable> getRecordData(@PathVariable String track_id) {
+    @GetMapping("/record")
+    public ResponseEntity<RecordTable> getRecordData(@RequestParam String track_id) {
 
         RecordTable record = recordrep.findByTrackId(track_id);
 
@@ -62,10 +63,17 @@ public class RecordController {
     @PostMapping("/addrecord")
     public RecordTable addrecord(@RequestBody RecordTable record)
     {
+        if(record==null)
+        {
+            logger.error("null input...");
+        }
         logger.info("Record added to the database successfully "+ record);
-        recordrep.save(record);
+        recordrep.saveAndFlush(record);
         return record;
     }
+
+
+
 
 //    @PostMapping("/updaterecord")
 //    public RecordTable updateRecord(@RequestBody RecordTable record)
