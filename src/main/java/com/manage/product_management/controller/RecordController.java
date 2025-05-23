@@ -11,7 +11,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*")
 @RestController
 public class RecordController {
 
@@ -27,26 +27,28 @@ public class RecordController {
 //        return ;
 //    }
 
+   // @CrossOrigin(origins="*")
     @GetMapping("/record")
-    public ResponseEntity<RecordTable> getRecordData(@RequestParam String track_id) {
+    public ResponseEntity<RecordTable> getRecordData(@RequestParam String trackId) {
 
-        RecordTable record = recordrep.findByTrackId(track_id);
+        System.out.println(trackId);
+        RecordTable record = recordrep.findByTrackId(trackId);
 
         if(record==null)
         {
             logger.error("Record does not exist");
             return ResponseEntity.badRequest().body(null);
         }
-//Hello Rohan Sir
         String cmp = record.getCompName();
         System.out.println(cmp);
         logger.info("Record Found");
         return ResponseEntity.ok().body(record);
     }
     @DeleteMapping("/deleterecord/{track_id}")
-    public Boolean deleteRecord(@PathVariable String  track_id)
+    public Boolean deleteRecord(@PathVariable String  trackId)
     {
-        RecordTable record=recordrep.findByTrackId(track_id);
+        System.out.println(trackId);
+        RecordTable record=recordrep.findByTrackId(trackId);
         if(record==null)
         {
             logger.error("Record does not exist");
