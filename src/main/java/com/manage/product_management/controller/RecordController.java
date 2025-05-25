@@ -1,13 +1,13 @@
 package com.manage.product_management.controller;
 
-import com.manage.product_management.model.LoginTable;
+import com.manage.product_management.model.RecordTable;
 import com.manage.product_management.repository.recordrepository;
+import com.manage.product_management.service.EmailService; // <-- 1. IMPORT ADD KIYA
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.manage.product_management.model.RecordTable;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
@@ -20,22 +20,16 @@ public class RecordController {
     @Autowired
     private recordrepository recordrep;
 
-//    @GetMapping("/getrecords")
-//    public List<RecordTable> getRecords(@RequestBody String track)
-//    {
-//
-//        return ;
-//    }
+    @Autowired
+    private EmailService emailService; // <-- 2. EMAIL SERVICE ADD KIYA
 
-   // @CrossOrigin(origins="*")
     @GetMapping("/record")
     public ResponseEntity<RecordTable> getRecordData(@RequestParam String trackId) {
 
         System.out.println(trackId);
         RecordTable record = recordrep.findByTrackId(trackId);
 
-        if(record==null)
-        {
+        if (record == null) {
             logger.error("Record does not exist");
             return ResponseEntity.badRequest().body(null);
         }
@@ -44,18 +38,15 @@ public class RecordController {
         logger.info("Record Found");
         return ResponseEntity.ok().body(record);
     }
-    @DeleteMapping("/deleterecord/{track_id}")
-    public Boolean deleteRecord(@PathVariable String  trackId)
-    {
+
+    @DeleteMapping("/deleterecord/{trackId}") // Changed {track_id} to {trackId} to match variable name
+    public Boolean deleteRecord(@PathVariable String trackId) {
         System.out.println(trackId);
-        RecordTable record=recordrep.findByTrackId(trackId);
-        if(record==null)
-        {
+        RecordTable record = recordrep.findByTrackId(trackId);
+        if (record == null) {
             logger.error("Record does not exist");
             return false;
-        }
-        else
-        {
+        } else {
             logger.info("Record Found and successfully deleted");
             recordrep.delete(record);
             return true;
@@ -63,31 +54,22 @@ public class RecordController {
     }
 
     @PostMapping("/addrecord")
-    public RecordTable addrecord(@RequestBody RecordTable record)
-    {
-        if(record==null)
-        {
+    public RecordTable addrecord(@RequestBody RecordTable record) {
+        if (record == null) {
             logger.error("null input...");
         }
-        logger.info("Record added to the database successfully "+ record);
+        logger.info("Record added to the database successfully " + record);
         recordrep.saveAndFlush(record);
+
+        // --- 3. EMAIL BHEJNE KA LOGIC YAHAN ADD KIYA ---
+        this.emailService.sendNewParcelNotification(record);
+
         return record;
     }
 
-
-
-
-//    @PostMapping("/updaterecord")
-//    public RecordTable updateRecord(@RequestBody RecordTable record)
-//    {
-//        //recordrep.
-//        return record;
-//    }
     @GetMapping("/viewrecords")
-    public List<RecordTable> getAllAdmins()
-    {
+    public List<RecordTable> getAllRecords() { // Renamed method for clarity
         logger.info("Getting the list and sending to the frontend");
         return recordrep.findAll();
     }
-
 }

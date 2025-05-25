@@ -33,6 +33,18 @@ public class RecordTable {
     @Column(name = "Contact")
     private  String number;
 
+    @Column(name = "RecipientEmail")
+    private String email;
+
+    // Also add the getter and setter methods for it
+    public String getEmail() {
+        return this.email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     @Column(name = "Date")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Temporal(TemporalType.DATE)
