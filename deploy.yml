@@ -2,9 +2,9 @@
 - name: Pull and Run docker image of Package_Management
   hosts: all
   tasks:
-    - name: Pull mehakdogra0067/package_management
+    - name: Pull adityavshinde/package_management
       docker_image:
-        name: mehakdogra0067/package_management
+        name: adityavshinde/package_management
         source: pull
 
 
@@ -28,10 +28,10 @@
 #              - "{{ db_volume }}:/var/lib/mysql"
 #            restart: true
 #            env:
-#              MYSQL_ROOT_PASSWORD: Shivraj@25
+#              MYSQL_ROOT_PASSWORD: root
 #              MYSQL_DATABASE: bidding_app_db
-#              MYSQL_USER: Shivraj
-#              MYSQL_PASSWORD: Shivraj@25
+#              MYSQL_USER: root
+#              MYSQL_PASSWORD: root
 #            ports:
 #              - "3307:3306"
 #
